@@ -1,0 +1,23 @@
+
+import React from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+
+const stripePromise = loadStripe('your_stripe_publishable_key');
+
+const StripeCheckout = () => {
+    const handleCheckout = async () => {
+        const { data } = await axios.post('http://localhost:8080/api/payment-intent', { amount: 5000 });
+        const stripe = await stripePromise;
+        const { error } = await stripe.redirectToCheckout({ sessionId: data.id });
+        if (error) {
+            console.error(error);
+        }
+    };
+
+    return (
+        <button onClick={handleCheckout}>Checkout</button>
+    );
+};
+
+export default StripeCheckout;
