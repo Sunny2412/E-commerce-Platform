@@ -1,0 +1,19 @@
+
+package com.ecommerce.model;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String userId;
+    private double totalAmount;
+
+    @OneToMany
+    private List<OrderItem> items;
+
+    // Getters and Setters
+}
